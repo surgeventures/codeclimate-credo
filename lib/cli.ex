@@ -165,11 +165,18 @@ defmodule Codeclimate.CLI do
   end
 
   defp set_defaults(config) do
-    %Execution{config |
+    defaults = %{
       crash_on_error: false,
       all: true,
       min_priority: -99
     }
+
+    execution_config =
+      config
+      |> Map.from_struct()
+      |> Map.merge(defaults)
+
+    struct(Execution, execution_config)
   end
 
   defp set_include_paths(
